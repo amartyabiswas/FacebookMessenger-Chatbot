@@ -59,7 +59,7 @@ const sessionIds = new Map();
 // Index route
 app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
-});
+})
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
@@ -70,7 +70,7 @@ app.get('/webhook/', function (req, res) {
 		console.error("Failed validation. Make sure the validation tokens match.");
 		res.sendStatus(403);
 	}
-});
+})
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -184,6 +184,26 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+        case "job-enquiry":
+            let replies=[
+                {
+                    "content_type":"text",
+                    "title":"Accountant",
+                    "payload":"Accountant"
+                },
+                {
+                    "content_type":"text",
+                    "title":"Sales",
+                    "payload":"Sales"
+                },
+                {
+                    "content_type":"text",
+                    "title":"Not interested",
+                    "payload":"Not interested"
+                }
+            ];
+            sendQuickReply(sender, responseText, replies);
+            break;
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
