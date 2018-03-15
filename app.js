@@ -26,6 +26,15 @@ if (!config.FB_APP_SECRET) {
 if (!config.SERVER_URL) { //used for ink to static files
 	throw new Error('missing SERVER_URL');
 }
+if (!config.SENDGRID_API_KEY) { //used for ink to static files
+    throw new Error('missing Sendgrid api key');
+}
+if (!config.EMAIL_FROM) { //used for ink to static files
+    throw new Error('missing email from');
+}
+if (!config.EMAIL_TO) { //used for ink to static files
+    throw new Error('missing email to');
+}
 
 
 
@@ -184,6 +193,22 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+        case "detailed-application":
+            if(isDefined(contexts[0]) && contexts[0].name==='job_application' && contexts[0].parameters){
+                let phone_number=(isDefined(contexts[0].parameters['phone-number']) && contexts[0].parameters['phone-number']!=='')? contexts[0].parameter['phone-number']:'';
+                let user_name=(isDefined(contexts[0].parameters['user-name']) && contexts[0].parameters['user-name']!=='')? contexts[0].parameter['user-name']:'';
+                let previous_job=(isDefined(contexts[0].parameters['previous-job']) && contexts[0].parameters['previous-job']!=='')? contexts[0].parameter['previous-job']:'';
+                let years_of_experience=(isDefined(contexts[0].parameters['years-of-experience']) && contexts[0].parameters['years-of-experience']!=='')? contexts[0].parameter['years-of-experience']:'';
+                let job_vacancy=(isDefined(contexts[0].parameters['job-vacancy']) && contexts[0].parameters['job-vacancy']!=='')? contexts[0].parameter['job-vacancy']:'';
+
+                if(phone_number!=='' && user_name!=='' && previous_job!=='' && years_of_experience!=='' && job_vacancy!==''){
+                    let emailContent= 'A new job enquiry from ' + user_name + ' for the job: '+ job_vacancy + '.<br> Previous job position: '+ previous_job +'.<br> Years of experience: '+ years_of_experience+'.<br> Phone Number: '+phone_number+'.';
+
+                    sendEmail('New job Application', emailContent);
+                }
+            }
+            sendTextMessage(sender, responseText);
+            break;
         case "job-enquiry":
             let replies=[
                 {
@@ -874,6 +899,28 @@ function verifyRequestSignature(req, res, buf) {
 	}
 }
 
+function sendEmail(subjects, contents) {
+    let helper = require('sendgrid').mail;
+    let from_email = new helper.Email(config.EMAIL_FROM);
+    let to_email = new helper.Email(config.EMAIL_TO);
+    let subject = subjects;
+    let content = new helper.Content('text/html', contents);
+    let mail = new helper.Mail(from_email, subject, to_email, content);
+
+    let sg = require('sendgrid')(config.SENDGRID_API_KEY);
+    let request = sg.emptyRequest({
+        method: 'POST',
+        path: '/v3/mail/send',
+        body: mail.toJSON(),
+    });
+
+    sg.API(request, function(error, response) {
+        console.log(response.statusCode);
+        console.log(response.body);
+        console.log(response.headers);
+    });
+}
+
 function isDefined(obj) {
 	if (typeof obj == 'undefined') {
 		return false;
@@ -889,4 +936,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-})
+});
