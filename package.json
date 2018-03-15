@@ -1,0 +1,24 @@
+{
+  "name": "hero",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "apiai": "^2.0.7",
+    "body-parser": "^1.18.2",
+    "crypto": "^1.0.1",
+    "express": "^4.16.3",
+    "npm": "^5.7.1",
+    "request": "^2.85.0",
+    "uuid": "^2.0.3"
+  },
+  "description": ""
+}
