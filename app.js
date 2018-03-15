@@ -204,9 +204,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             ];
             sendQuickReply(sender, responseText, replies);
             break;
-		default:
-			//unhandled action, just send back the text
-			sendTextMessage(sender, responseText);
+		
 	}
 }
 
