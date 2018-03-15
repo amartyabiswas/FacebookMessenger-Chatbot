@@ -209,6 +209,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             }
             sendTextMessage(sender, responseText);
             break;
+
         case "job-enquiry":
             let replies=[
                 {
@@ -229,6 +230,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
             ];
             sendQuickReply(sender, responseText, replies);
             break;
+
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
