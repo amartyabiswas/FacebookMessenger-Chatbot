@@ -188,12 +188,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 			sendTypingOn(sender);
 
 			//ask what the user wants next
+			//no need of quotes in type, url and payloads in case of buttons...
+			
 			setTimeout(function(){
 
 				let buttons=[
 		          {
 		            type:"web_url",
-		            url:"https://www.myapple.com/track_order",
+		            url:"https://www.flipkart.com/account/orders?link=home_orders",
 		            title:"Track order"
 		          },
 		          {
