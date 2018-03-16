@@ -186,8 +186,21 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case  "get-current-weather":
 
 			if(parameters.hasOwnProperty("geo-city") && parameters["geo-city"]!=''){
+				//http://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22
 
-				request({
+				let city=parameters["geo-city"];
+				app.get('http://samples.openweathermap.org/data/2.5/weather?q='+city+'&appid=b6907d289e10d714a6e88b30761fae22', function(req, res){
+					let weather= JSON.parse(req.body);
+
+					if(weather.hasOwnProperty("weather")){
+							let reply=`${responseText} ${weather["weather"][0]}`;
+							sendTextMessage(sender, reply);
+						}else{
+							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`);
+						}
+				});
+
+				/*request({
 					url: "http://api.openweathermap.org/data/2.5",
 					qs: {
 						appId: config.WEATHER_API_KEY,
@@ -202,10 +215,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 							let reply=`${responseText} ${weather["weather"][0]["description"]}`;
 							sendTextMessage(sender, reply);
 						}else{
-							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`)
+							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`);
 						}
 					}
-				});
+				});*/
 
 			}else{
 				sendTextMessage(sender, responseText);
