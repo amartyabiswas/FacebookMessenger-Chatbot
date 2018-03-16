@@ -803,7 +803,8 @@ function receivedPostback(event) {
 			break;
 		case 'JOB_APPLY':
 			//Get feedback with new jobs
-			sendToApiAi(senderID, "Not interested");
+			//While calling the sendToApiAi function, pass the string to which we want ApiAi to respond...
+			sendToApiAi(senderID, "Is there any job opening?");
 			break;
 		case 'CHAT':
 			//The user wants to chat
