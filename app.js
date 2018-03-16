@@ -183,6 +183,38 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 
+		case "faq-delivery":
+			sendTextMessage(sender, responseText);
+			sendTypingOn(sender);
+
+			//ask what the user wants next
+			setTimeout(function(){
+
+				let buttons=[
+		          {
+		            type:"web_url",
+		            url:"https://www.myapple.com/track_order",
+		            title:"Track order"
+		          },
+		          {
+		            type:"phone_number",
+		            title:"Call Us",
+		            payload:"+919977016904"
+		          },
+		          {
+		            type:"postback",
+		            title:"Keep on chatting",
+		            payload:"CHAT"
+		          }
+		        ];
+
+
+				sendButtonMessage(sender, "What would you like to do next?", buttons)
+
+			}, 3000)
+
+		break;
+
 		case "detailed-application":
 
 			if(isDefined(contexts[0]) && contexts[0].name=='job_application' && contexts[0].parameters){
@@ -766,6 +798,11 @@ function receivedPostback(event) {
 	let payload = event.postback.payload;
 
 	switch (payload) {
+		case 'CHAT':
+
+			//The user wants to chat
+			sendTextMessage(senderID, "I love chatting too? Do you have any other questions");
+			break;
 		default:
 			//unindentified payload
 			sendTextMessage(senderID, "I'm not sure what you want. Can you be more specific?");
