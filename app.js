@@ -201,7 +201,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}else{
 						let weather= JSON.parse(body);
 						if(weather.hasOwnProperty("weather")){
-							let reply=`${responseText} ${weather["weather"][0]["description"]}`+', Temperature: '+`${weather["main"][0]["temp"]}`+', Pressure: '+`${weather["main"][0]["pressure"]}`+', Humidity: '+`${weather["main"][0]["humidity"]}`;
+							let reply=`${responseText} ${weather["weather"][0]["description"]}`+', Temperature: '+`${weather["main"]["temp"]}`+', Pressure: '+`${weather["main"]["pressure"]}`+', Humidity: '+`${weather["main"]["humidity"]}`;
 							sendTextMessage(sender, reply);
 						}else{
 							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`);
