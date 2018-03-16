@@ -183,6 +183,36 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 
+		case  "get-current-weather":
+
+			if(parameters.hasOwnProperty("geo-city") && parameters["geo-city"]!=''){
+
+				request({
+					url: "http://api.openweathermap.org/data/2.5",
+					qs: {
+						appId: config.WEATHER_API_KEY,
+						q: parameters["geo-city"]
+					}// Query string data
+				}, function(err, res, body){
+					if(err){
+						console.log(err);
+					}else{
+						let weather= JSON.parse(body);
+						if(weather.hasOwnProperty("weather")){
+							let reply=`${responseText} ${weather["weather"][0]["description"]}`;
+							sendTextMessage(sender, reply);
+						}else{
+							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`)
+						}
+					}
+				});
+
+			}else{
+				sendTextMessage(sender, responseText);
+			}
+
+		break;
+
 		case "faq-delivery":
 			sendTextMessage(sender, responseText);
 			sendTypingOn(sender);

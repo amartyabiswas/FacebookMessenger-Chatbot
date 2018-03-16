@@ -5,4 +5,5 @@ module.exports = {
     FB_APP_SECRET: '9ff3eb74289fd82179dfc8ae9284c7b1',
     SERVER_URL: "https://smartchats.herokuapp.com/",
     SENDGRID_API_KEY: "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",
+    WEATHER_API_KEY: "a188cc4a27a0b163b7953e4b11fe6c77"
 };
