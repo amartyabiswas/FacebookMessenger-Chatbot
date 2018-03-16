@@ -183,6 +183,30 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 
+		case "detailed-application":
+			if(isDefined(contexts[0]) && contexts[0].name=='job_application' && contexts[0].parameters){
+				let phone_number=(isDefined(contexts[0].parameters['phone-number']) 
+					&& contexts[0].parameters['phone-number']!='')? contexts[0].parameters['phone-number']:'';
+				let user_name=(isDefined(contexts[0].parameters['user-name']) 
+					&& contexts[0].parameters['user-name']!='')? contexts[0].parameters['user-name']:'';
+				let previous_job=(isDefined(contexts[0].parameters['previous-job']) 
+					&& contexts[0].parameters['previous-job']!='')? contexts[0].parameters['previous-job']:'';
+				let years_of_experience=(isDefined(contexts[0].parameters['years-of-experience']) 
+					&& contexts[0].parameters['years-of-experience']!='')? contexts[0].parameters['years-of-experience']:'';
+				let job_vacancy=(isDefined(contexts[0].parameters['job-vacancy']) 
+					&& contexts[0].parameters['job-vacancy']!='')? contexts[0].parameters['job-vacancy']:'';
+
+
+				if(phone_number!='' && user_name!='' && previous_job!='' && years_of_experience!='' && job_vacancy!=''){
+					let emailContent= 'Name: '+ user_name+'<br> Job Position: '+ job_vacancy +'<br> Previous Job: '+ previous_job +'<br> Years of Experience: '+ years_of_experience +'<br> Phone Number: '+ phone_number.
+
+					sendEmail('New job application', emailContent);
+				}
+			}
+
+
+		break;
+
         case "job-enquiry":
             let replies=[
                 {
@@ -872,6 +896,28 @@ function verifyRequestSignature(req, res, buf) {
 			throw new Error("Couldn't validate the request signature.");
 		}
 	}
+}
+
+function sendEmail(topic, body){
+	var helper = require('sendgrid').mail;
+	var from_email = new helper.Email('amartyabiswas001@gmail.com');
+	var to_email = new helper.Email('amartyabiswas01@gmail.com');
+	var subject = topic;
+	var content = new helper.Content('text/html', body);
+	var mail = new helper.Mail(from_email, subject, to_email, content);
+
+	var sg = require('sendgrid')('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');
+	var request = sg.emptyRequest({
+	  method: 'POST',
+	  path: '/v3/mail/send',
+	  body: mail.toJSON(),
+	});
+
+	sg.API(request, function(error, response) {
+	  console.log(response.statusCode);
+	  console.log(response.body);
+	  console.log(response.headers);
+	});
 }
 
 function isDefined(obj) {
