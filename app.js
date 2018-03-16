@@ -420,9 +420,6 @@ function sendToApiAi(sender, text) {
 	apiaiRequest.end();
 }
 
-
-
-
 function sendTextMessage(recipientId, text) {
 	let messageData = {
 		recipient: {
@@ -806,7 +803,7 @@ function receivedPostback(event) {
 			break;
 		case 'JOB_APPLY':
 			//Get feedback with new jobs
-			sendToApiAi(senderID, "Job openings");
+			sendToApiAi(senderID, "Not interested");
 			break;
 		case 'CHAT':
 			//The user wants to chat
