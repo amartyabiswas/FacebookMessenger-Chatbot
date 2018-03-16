@@ -189,7 +189,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 			//ask what the user wants next
 			//no need of quotes in type, url and payloads in case of buttons...
-			
+
 			setTimeout(function(){
 
 				let buttons=[
@@ -800,8 +800,11 @@ function receivedPostback(event) {
 	let payload = event.postback.payload;
 
 	switch (payload) {
+		case 'JOB_APPLY':
+			//Get feedback with new jobs
+			sendToApiAi(senderID, "Job openings");
+			break;
 		case 'CHAT':
-
 			//The user wants to chat
 			sendTextMessage(senderID, "I love chatting too? Do you have any other questions");
 			break;
