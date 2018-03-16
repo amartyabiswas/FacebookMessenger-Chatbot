@@ -251,7 +251,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 		case "detailed-application":
 
-			if(isDefined(contexts[0]) && contexts[0].name=='job_application' && contexts[0].parameters){
+			if(isDefined(contexts[0]) && 
+				(contexts[0].name=='job_application' || contexts[0].name=='job-application-details_dialog_context') 
+				&& contexts[0].parameters){
 
 				let phone_number=(isDefined(contexts[0].parameters['phone-number']) 
 					&& contexts[0].parameters['phone-number']!='')? contexts[0].parameters['phone-number']:'';
@@ -264,14 +266,37 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let job_vacancy=(isDefined(contexts[0].parameters['job-vacancy']) 
 					&& contexts[0].parameters['job-vacancy']!='')? contexts[0].parameters['job-vacancy']:'';
 
+				if(phone_number=='' && user_name!='' && previous_job!='' && years_of_experience==''){
 
-				if(phone_number!='' && user_name!='' && previous_job!='' && years_of_experience!='' && job_vacancy!=''){
+					let replies=[
+	                {
+	                    "content_type":"text",
+	                    "title":"Less than one year",
+	                    "payload":"Less than one year"
+	                },
+	                {
+	                    "content_type":"text",
+	                    "title":"Less than 10 years",
+	                    "payload":"Less than 10 years"
+	                },
+	                {
+	                    "content_type":"text",
+	                    "title":"More than 10 years",
+	                    "payload":"More than 10 years"
+	                }
+	            ];
+           		sendQuickReply(sender, responseText, replies);
+
+				}else if(phone_number!='' && user_name!='' && previous_job!='' && years_of_experience!='' && job_vacancy!=''){
 					let emailContent= 'Name: '+ user_name+'<br> Job Position: '+ job_vacancy +'<br> Previous Job: '+ previous_job +'<br> Years of Experience: '+ years_of_experience +'<br> Phone Number: '+ phone_number;
 					sendEmail('New job application', emailContent);
+					sendTextMessage(sender, responseText);
+				}else{
+					sendTextMessage(sender, responseText);
 				}
 			}
 
-		sendTextMessage(sender, responseText);
+		
 		break;
 
         case "job-enquiry":
