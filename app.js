@@ -1,5 +1,3 @@
-'use strict';
-
 const apiai = require('apiai');
 const config = require('./config');
 const express = require('express');
@@ -80,7 +78,7 @@ app.get('/webhook/', function (req, res) {
  *
  */
 app.post('/webhook/', function (req, res) {
-	var data = req.body;
+	let data = req.body;
 	console.log(JSON.stringify(data));
 
 
@@ -90,8 +88,8 @@ app.post('/webhook/', function (req, res) {
 		// Iterate over each entry
 		// There may be multiple if batched
 		data.entry.forEach(function (pageEntry) {
-			var pageID = pageEntry.id;
-			var timeOfEvent = pageEntry.time;
+			let pageID = pageEntry.id;
+			let timeOfEvent = pageEntry.time;
 
 			// Iterate over each messaging event
 			pageEntry.messaging.forEach(function (messagingEvent) {
@@ -125,10 +123,10 @@ app.post('/webhook/', function (req, res) {
 
 function receivedMessage(event) {
 
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
-	var timeOfMessage = event.timestamp;
-	var message = event.message;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
+	let timeOfMessage = event.timestamp;
+	let message = event.message;
 
 	if (!sessionIds.has(senderID)) {
 		sessionIds.set(senderID, uuid.v1());
@@ -136,15 +134,15 @@ function receivedMessage(event) {
 	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
 	//console.log(JSON.stringify(message));
 
-	var isEcho = message.is_echo;
-	var messageId = message.mid;
-	var appId = message.app_id;
-	var metadata = message.metadata;
+	let isEcho = message.is_echo;
+	let messageId = message.mid;
+	let appId = message.app_id;
+	let metadata = message.metadata;
 
 	// You may get a text or attachment but not both
-	var messageText = message.text;
-	var messageAttachments = message.attachments;
-	var quickReply = message.quick_reply;
+	let messageText = message.text;
+	let messageAttachments = message.attachments;
+	let quickReply = message.quick_reply;
 
 	if (isEcho) {
 		handleEcho(messageId, appId, metadata);
@@ -170,7 +168,7 @@ function handleMessageAttachments(messageAttachments, senderID){
 }
 
 function handleQuickReply(senderID, quickReply, messageId) {
-	var quickReplyPayload = quickReply.payload;
+	let quickReplyPayload = quickReply.payload;
 	console.log("Quick reply for message %s with payload %s", messageId, quickReplyPayload);
 	//send payload to api.ai
 	sendToApiAi(senderID, quickReplyPayload);
@@ -184,29 +182,6 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
-
-		 case "job-enquiry":
-            let replies=[
-                {
-                    "content_type":"text",
-                    "title":"Accountant",
-                    "payload":"Accountant"
-                },
-                {
-                    "content_type":"text",
-                    "title":"Sales",
-                    "payload":"Sales"
-                },
-                {
-                    "content_type":"text",
-                    "title":"Not interested",
-                    "payload":"Not interested"
-                }
-            ];
-            sendQuickReply(sender, responseText, replies);
-            break;
-
-            
 		default:
 			//unhandled action, just send back the text
 			sendTextMessage(sender, responseText);
@@ -220,7 +195,7 @@ function handleMessage(message, sender) {
 			break;
 		case 2: //quick replies
 			let replies = [];
-			for (var b = 0; b < message.replies.length; b++) {
+			for (let b = 0; b < message.replies.length; b++) {
 				let reply =
 				{
 					"content_type": "text",
@@ -236,7 +211,7 @@ function handleMessage(message, sender) {
 			break;
 		case 4:
 			// custom payload
-			var messageData = {
+			let messageData = {
 				recipient: {
 					id: sender
 				},
@@ -254,10 +229,10 @@ function handleMessage(message, sender) {
 function handleCardMessages(messages, sender) {
 
 	let elements = [];
-	for (var m = 0; m < messages.length; m++) {
+	for (let m = 0; m < messages.length; m++) {
 		let message = messages[m];
 		let buttons = [];
-		for (var b = 0; b < message.buttons.length; b++) {
+		for (let b = 0; b < message.buttons.length; b++) {
 			let isLink = (message.buttons[b].postback.substring(0, 4) === 'http');
 			let button;
 			if (isLink) {
@@ -304,7 +279,7 @@ function handleApiAiResponse(sender, response) {
 		let previousType ;
 		let cardTypes = [];
 		let timeout = 0;
-		for (var i = 0; i < messages.length; i++) {
+		for (let i = 0; i < messages.length; i++) {
 
 			if ( previousType == 1 && (messages[i].type != 1 || i == messages.length - 1)) {
 
@@ -368,7 +343,7 @@ function sendToApiAi(sender, text) {
 
 
 function sendTextMessage(recipientId, text) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -384,7 +359,7 @@ function sendTextMessage(recipientId, text) {
  *
  */
 function sendImageMessage(recipientId, imageUrl) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -406,7 +381,7 @@ function sendImageMessage(recipientId, imageUrl) {
  *
  */
 function sendGifMessage(recipientId) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -428,7 +403,7 @@ function sendGifMessage(recipientId) {
  *
  */
 function sendAudioMessage(recipientId) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -450,7 +425,7 @@ function sendAudioMessage(recipientId) {
  * example videoName: "/assets/allofus480.mov"
  */
 function sendVideoMessage(recipientId, videoName) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -472,7 +447,7 @@ function sendVideoMessage(recipientId, videoName) {
  * example fileName: fileName"/assets/test.txt"
  */
 function sendFileMessage(recipientId, fileName) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -496,7 +471,7 @@ function sendFileMessage(recipientId, fileName) {
  *
  */
 function sendButtonMessage(recipientId, text, buttons) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -517,7 +492,7 @@ function sendButtonMessage(recipientId, text, buttons) {
 
 
 function sendGenericMessage(recipientId, elements) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -539,9 +514,9 @@ function sendGenericMessage(recipientId, elements) {
 function sendReceiptMessage(recipientId, recipient_name, currency, payment_method,
 							timestamp, elements, address, summary, adjustments) {
 	// Generate a random receipt ID as the API requires a unique ID
-	var receiptId = "order" + Math.floor(Math.random() * 1000);
+	let receiptId = "order" + Math.floor(Math.random() * 1000);
 
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -572,7 +547,7 @@ function sendReceiptMessage(recipientId, recipient_name, currency, payment_metho
  *
  */
 function sendQuickReply(recipientId, text, replies, metadata) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -592,7 +567,7 @@ function sendQuickReply(recipientId, text, replies, metadata) {
  */
 function sendReadReceipt(recipientId) {
 
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -609,7 +584,7 @@ function sendReadReceipt(recipientId) {
 function sendTypingOn(recipientId) {
 
 
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -626,7 +601,7 @@ function sendTypingOn(recipientId) {
 function sendTypingOff(recipientId) {
 
 
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -641,7 +616,7 @@ function sendTypingOff(recipientId) {
  *
  */
 function sendAccountLinking(recipientId) {
-	var messageData = {
+	let messageData = {
 		recipient: {
 			id: recipientId
 		},
@@ -675,7 +650,7 @@ function greetUserText(userId) {
 	}, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
 
-			var user = JSON.parse(body);
+			let user = JSON.parse(body);
 
 			if (user.first_name) {
 				console.log("FB user: %s %s, %s",
@@ -709,8 +684,8 @@ function callSendAPI(messageData) {
 
 	}, function (error, response, body) {
 		if (!error && response.statusCode == 200) {
-			var recipientId = body.recipient_id;
-			var messageId = body.message_id;
+			let recipientId = body.recipient_id;
+			let messageId = body.message_id;
 
 			if (messageId) {
 				console.log("Successfully sent message with id %s to recipient %s",
@@ -735,13 +710,13 @@ function callSendAPI(messageData) {
  * 
  */
 function receivedPostback(event) {
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
-	var timeOfPostback = event.timestamp;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
+	let timeOfPostback = event.timestamp;
 
 	// The 'payload' param is a developer-defined field which is set in a postback 
 	// button for Structured Messages. 
-	var payload = event.postback.payload;
+	let payload = event.postback.payload;
 
 	switch (payload) {
 		default:
@@ -765,12 +740,12 @@ function receivedPostback(event) {
  * 
  */
 function receivedMessageRead(event) {
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
 
 	// All messages before watermark (a timestamp) or sequence have been seen.
-	var watermark = event.read.watermark;
-	var sequenceNumber = event.read.seq;
+	let watermark = event.read.watermark;
+	let sequenceNumber = event.read.seq;
 
 	console.log("Received message read event for watermark %d and sequence " +
 		"number %d", watermark, sequenceNumber);
@@ -785,11 +760,11 @@ function receivedMessageRead(event) {
  * 
  */
 function receivedAccountLink(event) {
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
 
-	var status = event.account_linking.status;
-	var authCode = event.account_linking.authorization_code;
+	let status = event.account_linking.status;
+	let authCode = event.account_linking.authorization_code;
 
 	console.log("Received account link event with for user %d with status %s " +
 		"and auth code %s ", senderID, status, authCode);
@@ -803,12 +778,12 @@ function receivedAccountLink(event) {
  *
  */
 function receivedDeliveryConfirmation(event) {
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
-	var delivery = event.delivery;
-	var messageIDs = delivery.mids;
-	var watermark = delivery.watermark;
-	var sequenceNumber = delivery.seq;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
+	let delivery = event.delivery;
+	let messageIDs = delivery.mids;
+	let watermark = delivery.watermark;
+	let sequenceNumber = delivery.seq;
 
 	if (messageIDs) {
 		messageIDs.forEach(function (messageID) {
@@ -829,16 +804,16 @@ function receivedDeliveryConfirmation(event) {
  *
  */
 function receivedAuthentication(event) {
-	var senderID = event.sender.id;
-	var recipientID = event.recipient.id;
-	var timeOfAuth = event.timestamp;
+	let senderID = event.sender.id;
+	let recipientID = event.recipient.id;
+	let timeOfAuth = event.timestamp;
 
 	// The 'ref' field is set in the 'Send to Messenger' plugin, in the 'data-ref'
 	// The developer can set this to an arbitrary value to associate the 
 	// authentication callback with the 'Send to Messenger' click event. This is
 	// a way to do account linking when the user clicks the 'Send to Messenger' 
 	// plugin.
-	var passThroughParam = event.optin.ref;
+	let passThroughParam = event.optin.ref;
 
 	console.log("Received authentication for user %d and page %d with pass " +
 		"through param '%s' at %d", senderID, recipientID, passThroughParam,
@@ -858,16 +833,16 @@ function receivedAuthentication(event) {
  *
  */
 function verifyRequestSignature(req, res, buf) {
-	var signature = req.headers["x-hub-signature"];
+	let signature = req.headers["x-hub-signature"];
 
 	if (!signature) {
 		throw new Error('Couldn\'t validate the signature.');
 	} else {
-		var elements = signature.split('=');
-		var method = elements[0];
-		var signatureHash = elements[1];
+		let elements = signature.split('=');
+		let method = elements[0];
+		let signatureHash = elements[1];
 
-		var expectedHash = crypto.createHmac('sha1', config.FB_APP_SECRET)
+		let expectedHash = crypto.createHmac('sha1', config.FB_APP_SECRET)
 			.update(buf)
 			.digest('hex');
 
@@ -877,22 +852,8 @@ function verifyRequestSignature(req, res, buf) {
 	}
 }
 
-function sendEmail(subjects, contexts){
-	const sgMail = require('@sendgrid/mail');
-	sgMail.setApiKey(config.SENDGRID_API_KEY);
-	const msg = {
-
-	  to: 'amartyabiswas01@gmail.com',
-	  from: 'amartyabiswas001@gmail.com',
-	  subject: subjects,
-	  text: contexts,
-	  html: '<strong>'+contexts+'</strong>',
-};
-	sgMail.send(msg);
-}
-
 function isDefined(obj) {
-	if (typeof obj == 'undefined') {
+	if (typeof obj === 'undefined') {
 		return false;
 	}
 
@@ -906,4 +867,4 @@ function isDefined(obj) {
 // Spin up the server
 app.listen(app.get('port'), function () {
 	console.log('running on port', app.get('port'))
-})
+});

@@ -1,7 +1,6 @@
 {
   "name": "hero",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -13,11 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@sendgrid/mail": "^6.2.1",
-    "apiai": "^2.0.5",
-    "body-parser": "^1.15.1",
-    "express": "^4.13.4",
-    "request": "^2.72.0",
+    "apiai": "^2.0.7",
+    "body-parser": "^1.18.2",
+    "express": "^4.16.3",
+    "request": "^2.85.0",
     "uuid": "^2.0.3"
-  }
+  },
+  "description": ""
 }
