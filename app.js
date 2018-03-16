@@ -198,7 +198,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 
 				if(phone_number!='' && user_name!='' && previous_job!='' && years_of_experience!='' && job_vacancy!=''){
-					let emailContent= 'Name: '+ user_name+'<br> Job Position: '+ job_vacancy +'<br> Previous Job: '+ previous_job +'<br> Years of Experience: '+ years_of_experience +'<br> Phone Number: '+ phone_number.
+					let emailContent= 'Name: '+ user_name+'<br> Job Position: '+ job_vacancy +'<br> Previous Job: '+ previous_job +'<br> Years of Experience: '+ years_of_experience +'<br> Phone Number: '+ phone_number;
 
 					sendEmail('New job application', emailContent);
 				}
