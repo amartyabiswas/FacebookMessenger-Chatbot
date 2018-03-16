@@ -189,18 +189,6 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				//http://api.openweathermap.org/data/2.5?q=London,uk&appid=b6907d289e10d714a6e88b30761fae22
 
 				let city=parameters["geo-city"];
-				app.get('http://samples.openweathermap.org/data/2.5/weather?q='+city+'&appid=a188cc4a27a0b163b7953e4b11fe6c77', function(req, res){
-					let weather= JSON.parse(req.body);
-					console.log(weather);
-					if(weather.hasOwnProperty("weather")){
-							let reply=`${responseText} ${weather["weather"][0]}`;
-							sendTextMessage(sender, reply);
-						}else{
-							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`);
-						}
-				});
-
-				/*let city=parameters["geo-city"];
 				request({
 					url: "http://api.openweathermap.org/data/2.5/weather",
 					qs: {
@@ -213,14 +201,14 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					}else{
 						let weather= JSON.parse(body);
 						if(weather.hasOwnProperty("weather")){
-							let reply=`${responseText} ${weather["weather"][0]["description"]}`;
+							let reply=`${responseText} ${weather["weather"][0]["description"]}`+', Temperature: '+`${weather["main"][0]["temp"]}`+', Pressure: '+`${weather["main"][0]["pressure"]}`+', Humidity: '+`${weather["main"][0]["humidity"]}`;
 							sendTextMessage(sender, reply);
 						}else{
 							sendTextMessage(sender, `No weather report for ${parameters["geo-city"]}`);
 						}
 					}
 				});
-*/
+
 			}else{
 				sendTextMessage(sender, responseText);
 			}
