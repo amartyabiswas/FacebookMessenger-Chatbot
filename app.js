@@ -191,7 +191,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let city=parameters["geo-city"];
 				app.get('http://samples.openweathermap.org/data/2.5/weather?q='+city+'&appid=b6907d289e10d714a6e88b30761fae22', function(req, res){
 					let weather= JSON.parse(req.body);
-
+					console.log(weather);
 					if(weather.hasOwnProperty("weather")){
 							let reply=`${responseText} ${weather["weather"][0]}`;
 							sendTextMessage(sender, reply);
