@@ -6,7 +6,10 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
+let mongoose=require('mongoose');
+let users=require('./models/users');
 
+mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -43,10 +46,7 @@ app.use(bodyParser.urlencoded({
 }))
 
 // Process application/json
-app.use(bodyParser.json())
-
-
-
+app.use(bodyParser.json());
 
 const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	language: "en",
@@ -295,8 +295,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 					sendTextMessage(sender, responseText);
 				}
 			}
-
-		
+			
 		break;
 
         case "job-enquiry":
@@ -790,6 +789,9 @@ function greetUserText(userId) {
 			if (user.first_name) {
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
+
+				let newUser=new users(users);
+				newUser.save(users);
 
 				sendTextMessage(userId, "Welcome " + user.first_name + '!'+
 					'I can answer frequently asked questions for you and perform job interviews.'+
