@@ -796,8 +796,10 @@ function greetUserText(userId) {
 				//Creating collections using mongo client
 				MongoClient.connect(url, function(err, db) {
 				  if (err) throw err;
-				  var dbo = db.db("mydb");
-				  dbo.collection("users").insertOne(user, function(err, res) {
+				  
+				  let collection=db.collection("users");
+				  
+				  collection.insertOne(user, function(err, res) {
 				    if (err) throw err;
 				    console.log("1 document inserted");
 				    db.close();
