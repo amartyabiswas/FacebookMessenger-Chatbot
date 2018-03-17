@@ -183,14 +183,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {	
 		case "user-fav-color":
 
-			let retVal;
+			let retVal='';
 			usercolors.find({}, function(err, data){
 				if(err){
 					console.log(err);
 				}else{
 					data.forEach(function(val){
 						retVal=val.color;
+						console.log(retVal);
+						console.log(val.color);
 					});
+					console.log(retVal);
 				}
 			});
 
