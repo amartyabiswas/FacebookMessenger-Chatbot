@@ -181,6 +181,24 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {	
+		case "user-fav-color":
+
+			let retVal;
+			usercolors.find({}, function(err, data){
+				if(err){
+					console.log(err);
+				}else{
+					data.forEach(function(val){
+						retVal=val.color;
+					});
+				}
+			});
+
+			let ans=`Your favourite colour is ${retVal}`;
+			sendTextMessage(sender, ans);
+
+		break;
+
 		case "redminote5_colors.favourite":
 
 		/*usercolors.find({}, function(err, data){
