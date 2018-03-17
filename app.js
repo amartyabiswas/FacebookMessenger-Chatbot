@@ -190,15 +190,11 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}else{
 					data.forEach(function(val){
 						retVal=val.color;
-						console.log(retVal);
-						console.log(val.color);
 					});
-					console.log(retVal);
+					let ans=`Your favourite colour is ${retVal}`;
+					sendTextMessage(sender, ans);
 				}
 			});
-
-			let ans=`Your favourite colour is ${retVal}`;
-			sendTextMessage(sender, ans);
 
 		break;
 
