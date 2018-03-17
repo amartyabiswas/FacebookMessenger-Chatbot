@@ -796,14 +796,13 @@ function greetUserText(userId) {
 				//Creating collections using mongo client
 				MongoClient.connect(url, function(err, db) {
 				  if (err) throw err;
-				  db.collection("users").insertOne(user, function(err, res) {
+				  var dbo = db.db("mydb");
+				  dbo.collection("users").insertOne(user, function(err, res) {
 				    if (err) throw err;
 				    console.log("1 document inserted");
 				    db.close();
 				  });
 				});
-
-
 
 			} else {
 				console.log("Cannot get data for fb user with id",userId);
