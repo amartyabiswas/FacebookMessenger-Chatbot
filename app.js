@@ -6,10 +6,9 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
-let MongoClient = require('mongodb').MongoClient;
 let mongoose=require('mongoose');
 let User=require('./models/users');
-let url = "mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d";
+const userData= require('./user');
 
 
 mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
@@ -56,11 +55,12 @@ const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	requestSource: "fb"
 });
 const sessionIds = new Map();
+const usersMap= new Map();
 
 // Index route
 app.get('/', function (req, res) {
 	res.send('Hello world, I am a chat bot')
-})
+});
 
 // for Facebook verification
 app.get('/webhook/', function (req, res) {
@@ -71,7 +71,7 @@ app.get('/webhook/', function (req, res) {
 		console.error("Failed validation. Make sure the validation tokens match.");
 		res.sendStatus(403);
 	}
-})
+});
 
 /*
  * All callbacks for Messenger are POST-ed. They will be sent to the same
@@ -121,9 +121,6 @@ app.post('/webhook/', function (req, res) {
 });
 
 
-
-
-
 function receivedMessage(event) {
 
 	let senderID = event.sender.id;
@@ -132,8 +129,8 @@ function receivedMessage(event) {
 	let message = event.message;
 
 	if (!sessionIds.has(senderID)) {
-		sessionIds.set(senderID, uuid.v1());
-	}
+        sessionIds.set(senderID, uuid.v1());
+    }
 	//console.log("Received message for user %d and page %d at %d with message:", senderID, recipientID, timeOfMessage);
 	//console.log(JSON.stringify(message));
 
@@ -1019,15 +1016,15 @@ function verifyRequestSignature(req, res, buf) {
 }
 
 function sendEmail(topic, body){
-	var helper = require('sendgrid').mail;
-	var from_email = new helper.Email('amartyabiswas001@gmail.com');
-	var to_email = new helper.Email('amartyabiswas01@gmail.com');
-	var subject = topic;
-	var content = new helper.Content('text/html', body);
-	var mail = new helper.Mail(from_email, subject, to_email, content);
+	let helper = require('sendgrid').mail;
+	let from_email = new helper.Email('amartyabiswas001@gmail.com');
+	let to_email = new helper.Email('amartyabiswas01@gmail.com');
+	let subject = topic;
+	let content = new helper.Content('text/html', body);
+	let mail = new helper.Mail(from_email, subject, to_email, content);
 
-	var sg = require('sendgrid')('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');
-	var request = sg.emptyRequest({
+	let sg = require('sendgrid')('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');
+	let request = sg.emptyRequest({
 	  method: 'POST',
 	  path: '/v3/mail/send',
 	  body: mail.toJSON(),
