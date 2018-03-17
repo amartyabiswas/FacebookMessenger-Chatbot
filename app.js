@@ -8,8 +8,6 @@ const app = express();
 const uuid = require('uuid');
 let mongoose=require('mongoose');
 let User=require('./models/users');
-const userData= require('./user');
-
 
 mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
 
