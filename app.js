@@ -183,13 +183,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
 		case "redmi-colors":
 
-			let variants='';
+			const variants='';
 			colors.find({}, function(err, data){
 				if(err){
 					console.log(err);
 				}else{
 					data.forEach(function(val){
-						variants+=val.color;
+						variants+=val.color+', ';
 						console.log(variants);
 					});
 				}
