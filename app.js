@@ -197,12 +197,23 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
 				sendTextMessage(sender, reply);
 			}else{
-				usercolors.update({}, { $set:{ color: parameters["color"]}});
+				usercolors.update({_id: "5aad4599cb0fee00044c90d8"}, { $set:{ color: parameters["color"]}});
 
 				let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
 				sendTextMessage(sender, reply);
 			}
 		});
+
+
+		/*let myObj={
+			color: parameters["color"]
+		};
+
+		let newUser = new usercolors(myObj);
+		newUser.save(myObj);
+
+		let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
+		sendTextMessage(sender, reply);*/
 				
 		break;
 
