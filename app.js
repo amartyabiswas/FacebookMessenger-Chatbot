@@ -223,6 +223,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 
 
 		let myObj={
+			fb_id: sender,
 			color: parameters["color"]
 		};
 
@@ -940,6 +941,9 @@ function receivedPostback(event) {
 	let payload = event.postback.payload;
 
 	switch (payload) {
+		case 'FUN_NEWS':
+			sendFunNewsSubscribe(senderID);
+		break;
 		case 'GET_STARTED':
 			greetUserText(senderID);
 			break;
@@ -1084,6 +1088,27 @@ function verifyRequestSignature(req, res, buf) {
 		}
 	}
 }
+
+function sendFunNewsSubscribe(userId){
+
+	let responseText="I can send you latest fun technology news. How often woul you like to have them?"
+
+	let replies=[
+		{
+	        "content_type":"text",
+	        "title":"Once per week",
+	        "payload":"NEWS_PER_WEEK"
+	    },
+	    {
+	        "content_type":"text",
+	        "title":"Once per day",
+	        "payload":"NEWS_PER_DAY"
+	    }
+	];
+
+	fbService.sendQuickReply(userId, responseText, replies);
+
+};
 
 function sendEmail(topic, body){
 	let helper = require('sendgrid').mail;

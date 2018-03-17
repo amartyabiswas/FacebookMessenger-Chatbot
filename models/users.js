@@ -7,7 +7,8 @@ let UserSchema=new mongoose.Schema({
 	profile_pic: String,
 	locale: String,
 	gender: String,
-	timezone: String
+	timezone: String,
+	//newsletter: Number
 });
 
 module.exports=mongoose.model("User", UserSchema);
