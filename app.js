@@ -188,13 +188,13 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(err){
 					console.log(err);
 				}else{
-					data.forEach(function(data){
-						variants+=data+' ,';
+					data.forEach(function(val){
+						variants+=val;
 					});
 				}
 			});
-
-			let reply='Redmi note 5 pro is available in'+ variants+'. What is your favourite color?';
+			console.log(variants);
+			let reply='Redmi note 5 pro is available in'+ variants +'. What is your favourite color?';
 			sendTextMessage(sender, reply);
 
 		break;
