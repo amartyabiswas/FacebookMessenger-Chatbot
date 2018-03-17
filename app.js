@@ -6,9 +6,13 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
-var MongoClient = require('mongodb').MongoClient;
-var url = "mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d";
+let MongoClient = require('mongodb').MongoClient;
+let mongoose=require('mongoose');
+let User=require('./models/users');
+let url = "mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d";
 
+
+mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -794,17 +798,19 @@ function greetUserText(userId) {
 					'What can I help you with?');
 
 				//Creating collections using mongo client
-				MongoClient.connect(url, function(err, db) {
-				  if (err) throw err;
-				  
-				  let collection=db.collection("users");
-				  
-				  collection.insertOne(user, function(err, res) {
-				    if (err) throw err;
-				    console.log("1 document inserted");
-				    db.close();
-				  });
-				});
+				let myObj={
+					fb_id: user.id,
+					first_name: user.first_name,
+					last_name: user.last_name,
+					profile_pic: user.profile_pic,
+					locale: user.locale,
+					gender: user.gender,
+					timezone: user.timezone
+				};
+
+				let newUser= new User(myObj);
+				newUser.save(myObj);
+				
 
 			} else {
 				console.log("Cannot get data for fb user with id",userId);
