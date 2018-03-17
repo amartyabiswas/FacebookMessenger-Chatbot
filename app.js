@@ -11,7 +11,7 @@ let User=require('./models/users');
 let colors=require('./models/colors');
 let usercolors=require('./models/user_color');
 
-mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
+mongoose.connect('MONGODB_URI');
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -1118,7 +1118,7 @@ function sendEmail(topic, body){
 	let content = new helper.Content('text/html', body);
 	let mail = new helper.Mail(from_email, subject, to_email, content);
 
-	let sg = require('sendgrid')('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');
+	let sg = require('sendgrid')(config.SENDGRID_API_KEY);
 	let request = sg.emptyRequest({
 	  method: 'POST',
 	  path: '/v3/mail/send',
