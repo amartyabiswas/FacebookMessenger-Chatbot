@@ -6,10 +6,9 @@ const bodyParser = require('body-parser');
 const request = require('request');
 const app = express();
 const uuid = require('uuid');
-let mongoose=require('mongoose');
-let users=require('./models/users');
+var MongoClient = require('mongodb').MongoClient;
+var url = "mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d";
 
-mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
 
 // Messenger API parameters
 if (!config.FB_PAGE_TOKEN) {
@@ -785,17 +784,27 @@ function greetUserText(userId) {
 		if (!error && response.statusCode == 200) {
 
 			let user = JSON.parse(body);
-
+			console.log(user);
 			if (user.first_name) {
 				console.log("FB user: %s %s, %s",
 					user.first_name, user.last_name, user.gender);
 
-				let newUser=new users(users);
-				newUser.save(users);
-
 				sendTextMessage(userId, "Welcome " + user.first_name + '!'+
 					'I can answer frequently asked questions for you and perform job interviews.'+
 					'What can I help you with?');
+
+				//Creating collections using mongo client
+				MongoClient.connect(url, function(err, db) {
+				  if (err) throw err;
+				  db.collection("users").insertOne(user, function(err, res) {
+				    if (err) throw err;
+				    console.log("1 document inserted");
+				    db.close();
+				  });
+				});
+
+
+
 			} else {
 				console.log("Cannot get data for fb user with id",userId);
 			}
