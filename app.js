@@ -188,9 +188,9 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				if(err){
 					console.log(err);
 				}else{
-					console.log(data);
 					data.forEach(function(val){
 						variants+=val.color+', ';
+						console.log(val.color);
 					});
 				}
 			});
