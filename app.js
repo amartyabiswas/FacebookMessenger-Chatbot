@@ -182,16 +182,27 @@ function handleEcho(messageId, appId, metadata) {
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {	
 		case "redminote5_colors.favourite":
-			
-			let myObj={
-				color: parameters["color"]
-			};
 
-			let newUser = new usercolors(myObj);
-			newUser.save(myObj);
+		usercolors.find({}, function(err, data){
+			if(err){
+				console.log(err);
+			}else if(data==''){
+				let myObj={
+					color: parameters["color"]
+				};
 
-			let reply= `I too love ${parameters["color"]}, Yo have great taste. I shall remember it`;
-			sendTextMessage(sender, reply);
+				let newUser = new usercolors(myObj);
+				newUser.save(myObj);
+
+				let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
+				sendTextMessage(sender, reply);
+			}else{
+				usercolors.update({}, { $set:{ color: parameters["color"]}});
+
+				let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
+				sendTextMessage(sender, reply);
+			}
+		});
 				
 		break;
 
