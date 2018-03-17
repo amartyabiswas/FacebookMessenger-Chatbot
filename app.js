@@ -184,17 +184,17 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		case "redmi-colors":
 
 			let variants='';
-			colors.find({}, function(err, data){
-				if(err){
-					console.log(err);
-				}else{
-					data.forEach(function(val){
-						variants += val.color;
-					});
-				}
-			});
-			console.log(variants);
-			let reply=`Redmi note 5 pro is available in ${variants} . What is your favourite color?`;
+			let reply='';
+				colors.find({}, function(err, data){
+					if(err){
+						console.log(err);
+					}else{
+						data.forEach(function(val){
+							variants += val.color;
+							reply=`Redmi note 5 pro is available in ${variants} . What is your favourite color?`;
+						});
+					}
+				});
 			sendTextMessage(sender, reply);
 
 		break;
