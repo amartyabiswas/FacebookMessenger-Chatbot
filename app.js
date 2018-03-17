@@ -183,7 +183,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {	
 		case "redminote5_colors.favourite":
 
-		usercolors.find({}, function(err, data){
+		/*usercolors.find({}, function(err, data){
 			if(err){
 				console.log(err);
 			}else if(data==''){
@@ -202,10 +202,10 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
 				sendTextMessage(sender, reply);
 			}
-		});
+		});*/
 
 
-		/*let myObj={
+		let myObj={
 			color: parameters["color"]
 		};
 
@@ -213,7 +213,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 		newUser.save(myObj);
 
 		let reply= `I too love ${parameters["color"]}, You have great taste! I shall remember it`;
-		sendTextMessage(sender, reply);*/
+		sendTextMessage(sender, reply);
 				
 		break;
 
