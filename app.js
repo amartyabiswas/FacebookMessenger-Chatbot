@@ -8,6 +8,8 @@ const app = express();
 const uuid = require('uuid');
 let mongoose=require('mongoose');
 let User=require('./models/users');
+let colors=require('./models/colors');
+let usercolors=require('./models/user_color');
 
 mongoose.connect('mongodb://heroku_j0xhx55d:a67qas4673gsuqb80jhp80h4uq@ds117489.mlab.com:17489/heroku_j0xhx55d');
 
@@ -53,7 +55,6 @@ const apiAiService = apiai(config.API_AI_CLIENT_ACCESS_TOKEN, {
 	requestSource: "fb"
 });
 const sessionIds = new Map();
-const usersMap= new Map();
 
 // Index route
 app.get('/', function (req, res) {
@@ -180,6 +181,23 @@ function handleEcho(messageId, appId, metadata) {
 
 function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 	switch (action) {
+		case "redmi-colors":
+
+			let variants='';
+			colors.find({}, function(err, data){
+				if(err){
+					console.log(err);
+				}else{
+					data.forEach(function(data){
+						variants+=data+' ,';
+					});
+				}
+			});
+
+			let reply='Redmi note 5 pro is available in'+ variants+'. What is your favourite color?';
+			sendTextMessage(sender, reply);
+
+		break;
 
 		case  "get-current-weather":
 
