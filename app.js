@@ -190,7 +190,7 @@ function handleApiAiAction(sender, action, responseText, contexts, parameters) {
 				}else{
 					console.log(data);
 					data.forEach(function(val){
-						variants+=val;
+						variants+=val.color+', ';
 					});
 				}
 			});
