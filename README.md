@@ -1,5 +1,5 @@
 # FacebookMessenger-Chatbot
-##### A chatbot for learning experience, made using DialogFlow (Api.ai), facebook developers tool and Node.js for backend.
+##### A chatbot for learning experience, made using DialogFlow (Api.ai), facebook developers tool and Node.js for backend
 
 ![screenshot 146](https://user-images.githubusercontent.com/31181068/37614187-1481f99e-2bd0-11e8-9978-ba6c9fcb2bd6.png)
 ![screenshot 138](https://user-images.githubusercontent.com/31181068/37614192-1615e6e4-2bd0-11e8-87fa-613d001bb35f.png)
