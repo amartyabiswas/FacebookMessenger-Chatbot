@@ -27,6 +27,7 @@
    ![screenshot 140](https://user-images.githubusercontent.com/31181068/37614199-1a7abeee-2bd0-11e8-82e0-1a039f13bbaa.png)
    
 #### Automatically identifies the location, place through Natural Language Processing and shows weather.
+![screenshot 138](https://user-images.githubusercontent.com/31181068/37672283-a8ef67b0-2c93-11e8-92a2-a4d8b32b3b5a.png)
 ![screenshot 138](https://user-images.githubusercontent.com/31181068/37614192-1615e6e4-2bd0-11e8-87fa-613d001bb35f.png)
 ![screenshot 141](https://user-images.githubusercontent.com/31181068/37614212-25eac616-2bd0-11e8-8c80-d3c51cf6d7b6.png)
 ![screenshot 142](https://user-images.githubusercontent.com/31181068/37614218-2abbae76-2bd0-11e8-9e02-99ce95b755ee.png)
