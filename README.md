@@ -26,7 +26,7 @@
      - Sends email to Manager through Sendgrid, sending all info of the applicant.
    ![screenshot 140](https://user-images.githubusercontent.com/31181068/37614199-1a7abeee-2bd0-11e8-82e0-1a039f13bbaa.png)
    
-#### Automatically identifies the location, place through Natural Language Processing and shows weather.It alutomatically identifies any global city, and marks as geo-location. Sends the info back to Node App, where we use Open Weather to get the weather info of that particular location.
+#### Automatically identifies the location, place through Natural Language Processing and shows weather.It automatically identifies any global city, and marks as geo-location. Sends the info back to Node App, where we use Open Weather to get the weather info of that particular location.
 ![screenshot 139](https://user-images.githubusercontent.com/31181068/37672386-da29bcc2-2c93-11e8-8b18-139a1dce0a02.png)
 
 #### Can remember your favourite color, each time! Favourite color is updated every time, and stored in MLabs.
