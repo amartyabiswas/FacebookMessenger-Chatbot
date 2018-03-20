@@ -26,11 +26,27 @@
      - Sends email to Manager through Sendgrid, sending all info of the applicant.
    ![screenshot 140](https://user-images.githubusercontent.com/31181068/37614199-1a7abeee-2bd0-11e8-82e0-1a039f13bbaa.png)
    
-#### Automatically identifies the location, place through Natural Language Processing and shows weather.
-![screenshot 138](https://user-images.githubusercontent.com/31181068/37672283-a8ef67b0-2c93-11e8-92a2-a4d8b32b3b5a.png)
+#### Automatically identifies the location, place through Natural Language Processing and shows weather.It alutomatically identifies any global city, and marks as geo-location. Sends the info back to Node App, where we use Open Weather to get the weather info of that particular location.
+![screenshot 139](https://user-images.githubusercontent.com/31181068/37672386-da29bcc2-2c93-11e8-8b18-139a1dce0a02.png)
+
+#### Can remember your favourite color, each time! Favourite color is updated every time, and stored in MLabs.
 ![screenshot 138](https://user-images.githubusercontent.com/31181068/37614192-1615e6e4-2bd0-11e8-87fa-613d001bb35f.png)
+
+#### Simple talk made using the various integrations avaiilable in DialogFlow.
 ![screenshot 141](https://user-images.githubusercontent.com/31181068/37614212-25eac616-2bd0-11e8-8c80-d3c51cf6d7b6.png)
+
+#### Glimpse of how chatbot replies without coding...
 ![screenshot 142](https://user-images.githubusercontent.com/31181068/37614218-2abbae76-2bd0-11e8-9e02-99ce95b755ee.png)
 ![screenshot 143](https://user-images.githubusercontent.com/31181068/37614226-3072becc-2bd0-11e8-8405-127f236bf5f3.png)
 ![screenshot 144](https://user-images.githubusercontent.com/31181068/37614229-329d2d72-2bd0-11e8-9168-5c1c517f7022.png)
 ![screenshot 145](https://user-images.githubusercontent.com/31181068/37614235-35c15442-2bd0-11e8-80f9-3fea30dfbbf0.png)
+
+# Installation
+```
+1. Download the code.
+2. Fill in various Tokens, webhooks, api keys etc.
+3. Integrate Mlabs.
+4. Host in heroku.
+5. Start chatting from FB page.
+```
+### Made by Amartya Biswas. All rights reserved 2018 @ Amartya. 
