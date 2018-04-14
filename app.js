@@ -11,7 +11,7 @@ let User=require('./models/users');
 let colors=require('./models/colors');
 let usercolors=require('./models/user_color');
 
-mongoose.connect('mongodb://heroku_tngc9t5g:10pmj4932f0vtv7pugvjiej5rj@ds151450.mlab.com:51450/heroku_tngc9t5g');
+mongoose.connect('mongodb://heroku_tngc9t5g:10pmj4932f0vtvXXXXXXXXXXX');
 
 
 // Messenger API parameters
